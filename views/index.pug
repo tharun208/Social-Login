@@ -1,0 +1,37 @@
+extends layout
+block content
+  title="SignUp Page"
+  .main.container
+    .row
+      .col-md-6.col-md-offset-3
+        h1.display-4.m-b-2 Sign Up
+        if(message)
+          h5(style=" color:#3CB371").display #{message}
+        if(failmessage)
+          h5(style="color:#FF0000").display #{failmessage}
+        if(message && img_src)
+           h6 scan below qr to enable two factor Authentication
+           p #{img_src}
+           br
+           br
+           br
+        form(method='POST' action='/sign_up')
+          div.form-group
+            label(for='name') Name:
+            input#name.form-control(type='text', placeholder='Name' name='name')
+          div.form-group
+            label(for='email') Email:
+            input#email.form-control(type='email', placeholder='Email' name='email')
+          div.form-group
+              label(for='password') Password:
+              input#password.form-control(type='password' name='password')
+          div.form-group
+            label(for='Mobile Number') Mobile Number:
+            input#mobile.form-control(type='text', placeholder='Mobile Number' name='MobileNumber')
+          div.form-group
+              label(for='DOB') Date Of Birth:
+              input#dob.form-control(type='text' name='dob',placeholder='Date Of Birth')
+          div.form-group
+                label(for='f2a') Enable Two Factor Authentication:
+                input#f2a.form-control(type='text' name='f2a',placeholder='True/False for Two Factor Auth')
+          button.btn.btn-primary(type='submit') Sign up

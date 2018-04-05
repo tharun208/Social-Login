@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  title="Login Page"
+  .main.container
+    .row
+      .col-md-6.col-md-offset-3
+        h1.display-4.m-b-2 Login
+        if(message)
+          h4(style=" color:#FF0000").display #{message}
+        form(method='POST' action='/login')
+          div.form-group
+            label(for='email') Email:
+            input#name.form-control(type='text', placeholder='Email' name='email')
+          div.form-group
+            label(for='Password') Password:
+            input#password.form-control(type='password', placeholder='Password' name='password')
+          div.form-group
+              label(for='token') Enter Your Token:
+              input#token.form-control(type='text' name='token',placeholder='Enter Your Token if 2 Factor is Enabled')
+          button.btn.btn-primary(type='submit') Login
+        a(href="/auth/facebook")
+         button.btn.btn-primary(type="button") Login With FaceBook
+        br
+        br
+        a(href="/auth/google")
+          button.btn.btn-primary(type="button") Login With Google
