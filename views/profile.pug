@@ -1,6 +1,7 @@
 extends layout
 block content
      title="Profile Page"
+     if(params.message)
      h1(style="color:#3CB371").display-4.m-b-2 #{params.message}
      if(params.param1 && params.param2)
        br

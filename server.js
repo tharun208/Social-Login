@@ -42,7 +42,9 @@ app.get('/login',function(req,res){
 });
 app.post('/sign_up',function(req,res){
   if(req.body) {
-    if(req.body.f2a == 'true') {
+    console.log(req.body)
+    if(req.body.password===req.body.confirmpassword) {
+    if(req.body.f2a === 'on') {
     var secret = speakeasy.generateSecret({length: 20});
     const InsertQuery="Insert into users (name,email,password,mobile,dob,secretKey) VALUES ('"+req.body.name+"','"+req.body.email+"','"+req.body.password+"','"+req.body.phone+"','"+req.body.dob+"','"+f2util.generateKey(secret)+"')";
     mysqlconnection.query(InsertQuery,function(err, result)
@@ -52,9 +54,9 @@ app.post('/sign_up',function(req,res){
 });
     QRCode.toDataURL(secret.otpauth_url).then(url =>{
     console.log(url);
-    res.send('<body><p>Scan Below QrCode To Enable 2Factor Authentication</p><br><img src='+url+'>'+'</body>');
+    res.send('<body><p>Scan Below QrCode To Enable 2Factor Authentication</p><br><img src='+url+'>'+'<a href=/>Back to Index Page</a></body>');
     });
-  } else if(req.body.f2a== 'false') {
+  } else {
     const InsertQuery="Insert into users (name,email,password,mobile,dob) VALUES ('"+req.body.name+"','"+req.body.email+"','"+req.body.password+"','"+req.body.phone+"','"+req.body.dob+"')";
     mysqlconnection.query(InsertQuery,function(err, result)
 {
@@ -63,6 +65,9 @@ app.post('/sign_up',function(req,res){
 });
     res.render('index',{message:'SignUp Successful'});
   }
+} else {
+  res.render('index',{failmessage:'Password Not Matching'});
+}
 } else {
     res.render('index',{failmessage:'SignUp Failed'});
   }

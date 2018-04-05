@@ -24,7 +24,10 @@ block content
             input#email.form-control(type='email', placeholder='Email' name='email')
           div.form-group
               label(for='password') Password:
-              input#password.form-control(type='password' name='password')
+              input#password.form-control(type='password' placeholder='Password' name='password')
+          div.form-group
+              label(for='confirm password') Confirm Password:
+              input#con-password.form-control(type='password' placeholder='Confirm Password' name='confirmpassword')
           div.form-group
             label(for='Mobile Number') Mobile Number:
             input#mobile.form-control(type='text', placeholder='Mobile Number' name='MobileNumber')
@@ -33,5 +36,5 @@ block content
               input#dob.form-control(type='text' name='dob',placeholder='Date Of Birth')
           div.form-group
                 label(for='f2a') Enable Two Factor Authentication:
-                input#f2a.form-control(type='text' name='f2a',placeholder='True/False for Two Factor Auth')
+                input(type='checkbox' name='f2a')
           button.btn.btn-primary(type='submit') Sign up
