@@ -36,5 +36,7 @@ block content
               input#dob.form-control(type='text' name='dob',placeholder='Date Of Birth')
           div.form-group
                 label(for='f2a') Enable Two Factor Authentication:
-                input(type='checkbox' name='f2a')
+                input(type='checkbox' name='f2a' checked='on' || 'off' )
           button.btn.btn-primary(type='submit') Sign up
+        a(href="/login")
+         button.btn.btn-primary(type="button") Login If You Have an Account

@@ -12,7 +12,7 @@ var mysqlconnection = mysql.createConnection(
   {
     host     : 'localhost',
     user     : 'root',
-    password : '',
+    password : 'tharun',
     database : 'backend',
   });
 mysqlconnection.connect(function(err){
@@ -57,11 +57,12 @@ app.post('/sign_up',function(req,res){
     res.send('<body><p>Scan Below QrCode To Enable 2Factor Authentication</p><br><img src='+url+'>'+'<a href=/>Back to Index Page</a></body>');
     });
   } else {
-    const InsertQuery="Insert into users (name,email,password,mobile,dob) VALUES ('"+req.body.name+"','"+req.body.email+"','"+req.body.password+"','"+req.body.phone+"','"+req.body.dob+"')";
+     console.log('I am Here');
+    const InsertQuery="Insert IGNORE into users (name,email,password,mobile,dob) VALUES ('"+req.body.name+"','"+req.body.email+"','"+req.body.password+"','"+req.body.phone+"','"+req.body.dob+"')";
     mysqlconnection.query(InsertQuery,function(err, result)
 {
   if (err)
-     res.send(err);
+     console.log(err);
 });
     res.render('index',{message:'SignUp Successful'});
   }
