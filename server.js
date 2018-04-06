@@ -122,4 +122,7 @@ app.get('/auth/google/callback',
   console.log(req.user.displayName)
   res.render('profile',{params:{message:'Login Successful',param1:req.user.displayName,param2:req.user.emails[0].value}})
   });
+  app.get('/logout',function(req,res){
+    res.redirect('/');
+  });
 app.listen(8081,()=>{console.log('server running at port 8081')});
