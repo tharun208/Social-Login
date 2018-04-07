@@ -165,7 +165,4 @@ app.get('/auth/google/callback',
   }
 });
 });
-https.createServer({
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
-},app).listen(8081,()=>{console.log('server running at port 8081')});
+app.listen(8081,()=>{console.log('server running at port 8081')});
