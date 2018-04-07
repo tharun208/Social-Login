@@ -24,7 +24,7 @@ mysqlconnection.connect(function(err){
   }
 });
 const app= express();
-app.use(morgan('combined'));
+app.use(morgan('dev'));
 app.use('views', express.static(__dirname + '/views'));
 app.set('view engine', 'pug');
 app.use( bodyParser.json());
@@ -37,15 +37,18 @@ app.use(session({ secret: 'heimdallhassoulstone',
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
+
 app.get('/',function(req,res){
 	res.set({
 		'Access-Control-Allow-Origin' : '*'
 	});
 	 res.render('index.pug');
 })
+
 app.get('/login',function(req,res){
   res.render('login.pug');
 });
+
 app.post('/sign_up',function(req,res){
   if(req.body) {
     console.log(req.body)
@@ -79,6 +82,7 @@ app.post('/sign_up',function(req,res){
     res.render('index',{failmessage:'SignUp Failed'});
   }
 });
+
 app.post('/login',function(req,res){
   if(req.body) {
     const SearchQuery="select * from users where email='"+req.body.email+"'";
@@ -115,6 +119,8 @@ app.post('/login',function(req,res){
     res.render('login',{message:'Login Failed'});
   }
 });
+
+//Profile route with Session Checking
 app.get('/profile',function(req,res){
   console.log(req.session);
   if(req.session.name && req.session.email) {
@@ -132,9 +138,8 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook'),
   function(req, res) {
     console.log(req.user);
-    console.log('profile------------>',profile)
-    req.session.name=req.user.displayName;
-    req.session.email=req.user.emails[0].value;
+    req.session.name=req.user.id;
+    req.session.email=req.user.displayName;
     res.redirect('/profile');
   });
 //Google Routes
@@ -147,6 +152,8 @@ app.get('/auth/google/callback',
   req.session.email=req.user.emails[0].value;
   res.redirect('/profile');
   });
+
+//Logout Routes with Session Destroy
   app.get('/logout',function(req,res){
   req.session.destroy(function(err) {
   if(err) {
