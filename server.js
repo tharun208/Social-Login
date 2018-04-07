@@ -7,6 +7,7 @@ var mysql=require('mysql');
 var QRCode = require('qrcode');
 var passport = require('passport');
 var speakeasy = require('speakeasy');
+var session = require('express-session')
 var f2util=require('./2fauth/2factorauthservice.js');
 var mysqlconnection = mysql.createConnection(
   {
@@ -28,6 +29,9 @@ app.set('view engine', 'pug');
 app.use( bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(session({ secret: '1234dfghrttguk',
+                  resave: false,
+                  saveUninitialized: false }));
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
@@ -84,12 +88,17 @@ app.post('/login',function(req,res){
        if(rows[0].secretKey) {
         if(f2util.checkForToken(rows[0].secretKey,req.body.token))
         {
-       res.render('profile',{params:{message:'Login Successful',param1:rows[0].name,param2:rows[0].email}});
+          req.session.name=rows[0].name;
+          req.session.email=rows[0].email;
+          res.redirect('/profile');
      } else {
        res.render('login',{message:'Token Verification Failed'});
      }
    } else {
-    res.render('profile',{params:{message:'Login Successful',param1:rows[0].name,param2:rows[0].email}})
+     req.session.name=rows[0].name;
+     req.session.email=rows[0].email;
+     res.redirect('/profile');
+     //res.render('profile',{params:{message:'Login Successful',param1:rows[0].name,param2:rows[0].email}})
    }
      } else {
        res.render('login',{message:'Invalid Password'});
@@ -103,6 +112,15 @@ app.post('/login',function(req,res){
     res.render('login',{message:'Login Failed'});
   }
 });
+app.get('/profile',function(req,res){
+  console.log(req.session);
+  if(req.session.name && req.session.email) {
+  res.render('profile',{params:{message:'Login Successful',param1:req.session.name,param2:req.session.email}})
+}
+else {
+  res.redirect('/login');
+}
+})
 //FaceBook Routes
 require('./passport/passport.js')(passport,mysqlconnection);
 app.get('/auth/facebook', passport.authenticate('facebook',{scope :'email'}));
@@ -110,8 +128,9 @@ app.get('/auth/facebook', passport.authenticate('facebook',{scope :'email'}));
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook'),
   function(req, res) {
-    console.log(res);
-    res.render('profile',{params:{message:'Login Successful',param1:req.user.id,param2:req.user.displayName}})
+    req.session.name=req.user.displayName;
+    req.session.email=req.user.emails[0].value;
+    res.redirect('/profile');
   });
 //Google Routes
 app.get('/auth/google', passport.authenticate('google',{scope:'email'}));
@@ -119,10 +138,17 @@ app.get('/auth/google', passport.authenticate('google',{scope:'email'}));
 app.get('/auth/google/callback',
   passport.authenticate('google'),
   function(req, res) {
-  console.log(req.user.displayName)
-  res.render('profile',{params:{message:'Login Successful',param1:req.user.displayName,param2:req.user.emails[0].value}})
+  req.session.name=req.user.displayName;
+  req.session.email=req.user.emails[0].value;
+  res.redirect('/profile');
   });
   app.get('/logout',function(req,res){
+  req.session.destroy(function(err) {
+  if(err) {
+    console.log(err);
+  } else {
     res.redirect('/');
-  });
+  }
+});
+});
 app.listen(8081,()=>{console.log('server running at port 8081')});
