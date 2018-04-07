@@ -7,6 +7,6 @@ module.exports = {
   'google': {
     'clientID':'1089691904958-ovsr5vgmfg7bltv146frosrnqovbbd2a.apps.googleusercontent.com',
     'clientSecret':'fs-d4sDggxwZmzEroW_OSLXs',
-    'callbackURL':'http://ec2-18-222-57-254.us-east-2.compute.amazonaws.com/auth/google/callback'
+    'callbackURL':'https://ec2-18-222-57-254.us-east-2.compute.amazonaws.com/auth/google/callback'
   }
 }
