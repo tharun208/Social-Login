@@ -7,11 +7,12 @@ var mysql=require('mysql');
 var QRCode = require('qrcode');
 var passport = require('passport');
 var speakeasy = require('speakeasy');
+var helmet=require('helmet');
 var f2util=require('./2fauth/2factorauthservice.js');
 var mysqlconnection = mysql.createConnection(
   {
-    host     : 'localhost',
     user     : 'root',
+    host     : 'localhost',
     password : 'tharun',
     database : 'backend',
   });
@@ -28,6 +29,7 @@ app.set('view engine', 'pug');
 app.use( bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(helmet());
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
