@@ -9,6 +9,8 @@ var passport = require('passport');
 var speakeasy = require('speakeasy');
 var helmet=require('helmet');
 var session = require('express-session')
+var fs = require('fs');
+var https = require('https');
 var f2util=require('./2fauth/2factorauthservice.js');
 var mysqlconnection = mysql.createConnection(
   {
@@ -163,4 +165,7 @@ app.get('/auth/google/callback',
   }
 });
 });
-app.listen(8081,()=>{console.log('server running at port 8081')});
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+},app).listen(8081,()=>{console.log('server running at port 8081')});
