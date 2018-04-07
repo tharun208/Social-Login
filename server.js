@@ -134,6 +134,8 @@ app.get('/auth/facebook', passport.authenticate('facebook',{scope :'email'}));
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook'),
   function(req, res) {
+    console.log(req.user);
+    console.log('profile------------>',profile)
     req.session.name=req.user.displayName;
     req.session.email=req.user.emails[0].value;
     res.redirect('/profile');
@@ -153,7 +155,7 @@ app.get('/auth/google/callback',
   if(err) {
     console.log(err);
   } else {
-    res.redirect('/');
+    res.redirect('/login');
   }
 });
 });
