@@ -1,7 +1,8 @@
 # learnestoBackend
 Learnesto Backend Assignment
 # Installation
-Clone the Project [From This Link](https://github.com/tharun208/learnestoBackend.git)
+1.Clone the Project [From This Link](https://github.com/tharun208/learnestoBackend.git)
+2.do ```git checkout assign-server```
 # Setup
 
 1. ```npm i```
