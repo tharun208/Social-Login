@@ -7,11 +7,8 @@ var mysql=require('mysql');
 var QRCode = require('qrcode');
 var passport = require('passport');
 var speakeasy = require('speakeasy');
-<<<<<<< Updated upstream
 var helmet=require('helmet');
-=======
 var session = require('express-session')
->>>>>>> Stashed changes
 var f2util=require('./2fauth/2factorauthservice.js');
 var mysqlconnection = mysql.createConnection(
   {
