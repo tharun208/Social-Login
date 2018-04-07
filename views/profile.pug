@@ -5,8 +5,8 @@ block content
      h1(style="color:#3CB371").display-4.m-b-2 #{params.message}
      if(params.param1 && params.param2)
        br
-       h3 Name: #{params.param1}
+       h3 Name or Id : #{params.param1}
        br
-       h3 Email: #{params.param2}
+       h3 Email or ProfileName: #{params.param2}
      a(href='/logout')
        button.btn.btn-primary(type="button") Logout
