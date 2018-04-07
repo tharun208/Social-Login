@@ -26,7 +26,7 @@ mysqlconnection.connect(function(err){
   }
 });
 const app= express();
-app.use(morgan('dev'));
+app.use(morgan('combined'));
 app.use('views', express.static(__dirname + '/views'));
 app.set('view engine', 'pug');
 app.use( bodyParser.json());
